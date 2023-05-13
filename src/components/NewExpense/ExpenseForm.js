@@ -2,32 +2,68 @@ import React, { useState } from "react";
 import "./ExpenseForm.css";
 
 const ExpenseForm = () => {
-  const [expense, setExpense] = useState("");
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
 
+  const titleChangeHandler = (e) => {
+    setEnteredTitle(e.target.value);
+    return (e.target.value = "");
+  };
+  const amountChangeHandler = (e) => {
+    setEnteredAmount(e.target.value);
+  };
+  const dateChangeHandler = (e) => {
+    setEnteredDate(e.target.value);
+  };
   const currentDate = new Date().toISOString().split("T")[0];
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 3);
   const minDateISO = minDate.toISOString().split("T")[0];
 
-  const titleChangeHandler = (e) => {
-    console.log(e.target.value);
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const expenseData = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: enteredDate,
+    };
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
+    console.log(expenseData);
   };
+
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input onChange={titleChangeHandler} type="text">
-            {expense}
-          </input>
+          <input
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+            type="text"
+          />
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
-          <input type="number" min="0.01" step="0.01"></input>
+          <input
+            value={enteredAmount}
+            type="number"
+            onChange={amountChangeHandler}
+            min="0.01"
+            step="0.01"
+          />
         </div>
         <div className="new-expense__control">
           <label>Date</label>
-          <input type="date" min={minDateISO} max={currentDate}></input>
+          <input
+            onChange={dateChangeHandler}
+            type="date"
+            min={minDateISO}
+            max={currentDate}
+            value={enteredDate}
+          />
         </div>
       </div>
       <div className="new-expense__actions">
