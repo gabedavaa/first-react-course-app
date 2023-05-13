@@ -19,7 +19,7 @@ const ExpenseForm = (props) => {
 
   const currentDate = new Date().toISOString().split("T")[0];
   const minDate = new Date();
-  minDate.setFullYear(minDate.getFullYear() - 3);
+  minDate.setFullYear(minDate.getFullYear() - 5);
   const minDateISO = minDate.toISOString().split("T")[0];
 
   const submitHandler = (e) => {
