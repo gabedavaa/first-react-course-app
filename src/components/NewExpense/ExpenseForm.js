@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ExpenseForm.css";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
@@ -16,6 +16,7 @@ const ExpenseForm = () => {
   const dateChangeHandler = (e) => {
     setEnteredDate(e.target.value);
   };
+
   const currentDate = new Date().toISOString().split("T")[0];
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 3);
@@ -28,10 +29,11 @@ const ExpenseForm = () => {
       amount: enteredAmount,
       date: enteredDate,
     };
+
+    props.onSaveExpenseData(expenseData);
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
-    console.log(expenseData);
   };
 
   return (
